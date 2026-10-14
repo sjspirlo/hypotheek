@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mortgage_simulator"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "pandas",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pandas-stubs",
+    "pyright",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff.lint]
+# COM812 adds a trailing comma to multi-line signatures/calls, which makes the
+# formatter keep them exploded (one argument per line).
+extend-select = ["COM812"]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = false
+
+[tool.pyright]
+include = ["src"]
+venvPath = "."
+venv = ".venv"
+# Strict for the package; notebooks/scripts use standard because matplotlib's
+# stubs leave many **kwargs untyped, which strict mode reports on every call.
+typeCheckingMode = "standard"
+strict = ["src"]
